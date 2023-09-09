@@ -1,1 +1,1 @@
-# stylus-inline
+# 🌘 Stylus CSS Inline
