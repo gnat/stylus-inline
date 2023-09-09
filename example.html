@@ -100,17 +100,20 @@
 		</script>
 		<script>
 			// 🌘 CSS Scope Inline (https://github.com/gnat/css-scope-inline)
-			var cssScopeCount = 1
+			window.cssScopeCount ??= 1 // Let extra copies share the scope count.
 			new MutationObserver((mutations, observer) => {
+				var cssScopePattern = new RegExp('(\\.me|\\.this|\\.self)(?![A-Za-z0-9\_\-])', 'g') // Can use: .me .this .self
 				for (var mutation of mutations) {
-					if (mutation.type === "childList" && mutation.addedNodes.length > 0) {
-						var addedNode = mutation.addedNodes[0]
-						if (addedNode.nodeName !== 'STYLE') continue // Not a <style>
-						if (!addedNode.parentNode || addedNode.parentNode?.tagName === 'HEAD') continue // Must have parent. Don't style <head>
-						cssScopeCount++ // Ready.
-						addedNode.parentNode.classList.add('self_'+cssScopeCount) // Make unique scope, example: .self_1234
-						var pattern = new RegExp('(\\.me|\\.this|\\.self)(?![A-Za-z0-9\_\-])', 'g') // Can use: .me .this .self
-						addedNode.textContent = stylus_to_css(addedNode.textContent).replace(pattern, '.self_'+cssScopeCount)
+					if (mutation.type !== "childList") continue // Skip if not mutating nodes.
+					var nodes = [...mutation.addedNodes] // Get new nodes.
+					for (var node = nodes.shift(); node != null; node = nodes.shift()) { // Process nodes.
+						nodes.push(...node.childNodes) // Also process children.
+						if (node.nodeName !== 'STYLE') continue // Skip if not a <style>
+						if (!node.parentNode || node.parentNode?.nodeName === 'HEAD') continue // Skip if no parent. Don't style <head>
+						if (node.textContent.includes('.self__')) continue // Skip if already processed.
+						var scope = 'self__'+(window.cssScopeCount++) // Ready. Make unique scope, example: .self__1234
+						node.parentNode.classList.add(scope)
+						node.textContent = stylus_to_css(node.textContent).replace(cssScopePattern, '.'+scope)
 					}
 				}
 			}).observe(document.documentElement, {childList: true, subtree: true})
