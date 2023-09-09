@@ -1,0 +1,167 @@
+<html>
+	<head>
+		<title>Inline real time stylus demo</title>
+		<script>
+			function stylus_to_css(string){
+				var cursor=0
+
+				// Remove excess indentation (dedent).
+				var indent=''
+				while (cursor < string.length) {
+					if (string[cursor] == "\n") { // Line.
+						cursor += 1 // Next.
+						continue
+					}
+					if (string[cursor] == "\t" || string[cursor] == " ") {
+						indent += string[cursor]
+						cursor += 1 // Next.
+						continue
+					}
+					string = string.replaceAll("\n"+indent, "\n") // Remove.
+					break
+				}
+
+				// Add curly braces.
+				var level_from=0
+				var level_to=0
+
+				while (cursor < string.length) {
+					if (string[cursor] == "\n") { // Line.
+						level_to = 0
+						cursor += 1 // Next.
+						continue
+					}
+					if (string[cursor] == "\t") { // Indent.
+						level_to += 1
+						cursor += 1 // Next.
+						continue
+					}
+					while (level_to > level_from) { // Real start.
+						level_from += 1
+
+						// Cursor #2 finds last real character for the insert.
+						var cursor_2 = cursor-1
+						while (cursor_2 > 0 && ["\n", "\t", " "].includes(string[cursor_2])) {
+							cursor_2 -= 1
+						}
+						cursor_2 += 1
+
+						string = string.slice(0, cursor_2) +' {'+ string.slice(cursor_2)
+						cursor += 2 // Skip ' {'
+						//cursor += 1 // Next.
+						continue
+					}
+					while (level_from > level_to) { // Real start.
+						level_from -= 1
+
+						// Cursor #2 finds last real character for the insert.
+						var cursor_2 = cursor-1
+						while (cursor_2 > 0 && ["\n", "\t", " "].includes(string[cursor_2])) {
+							cursor_2 -= 1
+						}
+						cursor_2 += 1
+
+						string = string.slice(0, cursor_2) +'} '+ string.slice(cursor_2)
+						cursor += 2 // Skip '} '
+						//cursor += 0 // Next.
+						continue
+					}
+					cursor += 1 // Next.
+				}
+
+				// End of file. Close remaining levels.
+				while (level_from > 0) {
+					string += '}'
+					level_from -= 1
+				}
+
+				function alphanum(c) {
+					return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9')
+				}
+
+				// Add semicolons.
+				cursor = 0
+				while (cursor < string.length) {
+					if (string[cursor] === "\n") { // Line.
+						if (cursor > 2) { // Should we add a semicolon?
+							var c = string[cursor-1]
+							if (c !== '{' && c !== '}' &&
+								(c === "\'" || c === '"' || c === ')' || c === '-' || c === '_' || alphanum(c))) {
+								string = string.slice(0, cursor) +';'+ string.slice(cursor)
+							}
+						}
+					}
+					cursor += 1 // Next.
+				}
+
+				console.log(string)
+				return string
+			}
+		</script>
+		<script>
+			// 🌘 CSS Scope Inline (https://github.com/gnat/css-scope-inline)
+			var cssScopeCount = 1
+			new MutationObserver((mutations, observer) => {
+				for (var mutation of mutations) {
+					if (mutation.type === "childList" && mutation.addedNodes.length > 0) {
+						var addedNode = mutation.addedNodes[0]
+						if (addedNode.nodeName !== 'STYLE') continue // Not a <style>
+						if (!addedNode.parentNode || addedNode.parentNode?.tagName === 'HEAD') continue // Must have parent. Don't style <head>
+						cssScopeCount++ // Ready.
+						addedNode.parentNode.classList.add('self_'+cssScopeCount) // Make unique scope, example: .self_1234
+						var pattern = new RegExp('(\\.me|\\.this|\\.self)(?![A-Za-z0-9\_\-])', 'g') // Can use: .me .this .self
+						addedNode.textContent = stylus_to_css(addedNode.textContent).replace(pattern, '.self_'+cssScopeCount)
+					}
+				}
+			}).observe(document.documentElement, {childList: true, subtree: true})
+		</script>
+	</head>
+	<body>
+
+	<h1>Inline real time stylus demo</h1>
+
+	<div>
+		<style>
+			html
+				font-family: Noto Sans, sans-serif
+			h1, h2, h3
+				font-size: 3rem
+				margin: 10px
+			.me
+				border: none
+				color: black
+				font-family: Noto Sans, sans-serif
+				background: hsl(100 20% 70%)
+				border: none
+				border-radius: 12px
+				box-shadow: 2px 2px 5px #00000044
+				padding: 10px 20px
+				color: #222
+				margin: 20px
+				animation: bounce 4s ease-in-out infinite
+				& span
+					background: hsl(200 50% 70%)
+					padding: 12px
+					border-radius: 4px
+					color: #fff
+				& ::before
+					content:'🔮'
+					padding: 0 4px 0 0
+				.me
+					li
+						list-style: disc
+						padding: 4px
+						border-radius: 12px
+						margin: 4px 20px
+			@keyframes bounce
+				0%
+					transform: translateY(0px)
+				50%
+					transform: translateY(20px)
+				100%
+					transform: translateY(0px)
+		</style>
+		Testing.. testing.. <span>Nested CSS</span>
+	</div>
+</body>
+</html>
