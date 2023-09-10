@@ -86,7 +86,7 @@
 						if (cursor > 2) { // Should we add a semicolon?
 							var c = string[cursor-1]
 							if (c !== '{' && c !== '}' &&
-								(c === "\'" || c === '"' || c === ')' || c === '-' || c === '_' || alphanum(c))) {
+								(c === "\'" || c === '"' || c === ')' || c === '%' || c === '-' || c === '_' || alphanum(c))) {
 								string = string.slice(0, cursor) +';'+ string.slice(cursor)
 							}
 						}
