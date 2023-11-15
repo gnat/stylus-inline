@@ -1,0 +1,23 @@
+%YAML 1.2
+---
+name: Python Pages
+scope: text.html
+version: 2
+extends: Packages/HTML/HTML.sublime-syntax
+
+file_extensions: [pyp]
+
+contexts:
+  main:
+    - meta_prepend: true
+    - match: \<\?
+      embed: scope:source.python
+      escape: \?\>
+    - match: \<stylus\>
+      captures:
+        0: entity.name.tag.block.any.html
+      embed: scope:source.stylus
+      escape: \<\/stylus\>
+      escape_captures:
+        0: entity.name.tag.block.any.html
+
