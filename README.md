@@ -1,7 +1,7 @@
 # 🌘 Stylus CSS Inline
 
 ## 🐍 Python Version (stylus.py)
-* Most reliable version since it compiles to main.css
+* Most reliable version since it generates `main.css` locally for you to load normally in the browser.
 
 ## ☕ Javascript Version (stylus.html)
 * Works for inline scoped `<script>` (or `<stylus>`) !
