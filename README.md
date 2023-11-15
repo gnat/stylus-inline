@@ -7,7 +7,7 @@
 ## 🐍 Python Version (stylus.py)
 * Most reliable version since it compiles to main.css
 
-## ☕ Javascript Version (stylus.py)
+## ☕ Javascript Version (stylus.html)
 * Works for inline scoped `<script>` (or `<stylus>`) !
 * Syntax highlighting in Sublime works!
 * 🟠 External stylus in real time: Browser removes invalid CSS from `<link>` and `@import()` making those paths invalid for processing.
