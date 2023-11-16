@@ -8,7 +8,7 @@ With new [CSS Nesting](https://developer.chrome.com/articles/css-nesting/), `hsl
 2023 it may also be best to seriously consider [vanilla CSS](https://twitter.com/dhh/status/1719041666412347651).
 
 ## 🐍 Python Version (stylus.py)
-* Most reliable version since it generates `main.css` locally for you to load normally in the browser.
+* Most reliable version since it generates `main.css` for you to load normally.
 * This version is a bit more complete and robust than the Javascript one.
 
 ## ☕ Javascript Version (stylus.html)
