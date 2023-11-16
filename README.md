@@ -15,9 +15,10 @@ With new [CSS Nesting](https://developer.chrome.com/articles/css-nesting/), `hsl
 * Runs in the browser automatically!
 * Works inside inline scoped `<stylus>`!
 * Syntax highlighting in Sublime works!
-* 🟠 External stylus in real time: Browser removes invalid CSS from `<link>` and `@import()` making those paths invalid for processing.
-  * Requires loading via custom JS function to work. Might or might not be worth it?
-    * Could load via `stylus('/css/main.css')` and inline `<script>` at top? Meh.
+* 🟠 Idea of external stylus in real time has issues.
+  * Browser removes invalid CSS from `<link>` and `@import()` making those paths invalid for processing.
+    * Requires loading via custom JS function to work. Might or might not be worth it?
+      * Could load via `stylus('/css/main.css')` and inline `<script>` at top? Meh.
 
 
 ## 👀 Before you adopt.
