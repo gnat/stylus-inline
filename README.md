@@ -12,6 +12,7 @@ With new [CSS Nesting](https://developer.chrome.com/articles/css-nesting/), `hsl
 * This version is a bit more complete and robust than the Javascript one.
 
 ## ☕ Javascript Version (stylus.html)
+* Runs in the browser automatically!
 * Works inside inline scoped `<stylus>`!
 * Syntax highlighting in Sublime works!
 * 🟠 External stylus in real time: Browser removes invalid CSS from `<link>` and `@import()` making those paths invalid for processing.
