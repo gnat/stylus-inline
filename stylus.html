@@ -6,6 +6,7 @@
 			function stylus_to_css(string){
 				var cursor=0
 
+				// Remove comments, extra lines.
 				string = string.replace(/(\/\*[\s\S]*?\*\/|\/\/[^\n]*)/g, '').replace(/^\s*$/gm, '').replace(/ +$/gm, '')
 				console.log(string)
 
