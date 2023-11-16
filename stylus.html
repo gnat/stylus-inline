@@ -1,9 +1,14 @@
+<!DOCTYPE html>
 <html>
 	<head>
-		<title>Inline real time stylus demo</title>
+		<title>🌘 CSS Scope Inline Test Page</title>
 		<script>
 			function stylus_to_css(string){
 				var cursor=0
+
+				string = string.replace(/(\/\*[\s\S]*?\*\/|\/\/[^\n]*)/g, '').replace(/^\s*$/gm, '').replace(/ +$/gm, '')
+				console.log(string)
+
 
 				// Remove excess indentation (dedent).
 				var indent=''
@@ -20,6 +25,8 @@
 					string = string.replaceAll("\n"+indent, "\n") // Remove.
 					break
 				}
+
+				string = " "+string
 
 				// Add curly braces.
 				var level_from=0
@@ -94,7 +101,7 @@
 					cursor += 1 // Next.
 				}
 
-				console.log(string)
+
 				return string
 			}
 		</script>
@@ -102,66 +109,197 @@
 			// 🌘 CSS Scope Inline (https://github.com/gnat/css-scope-inline)
 			window.cssScopeCount ??= 1 // Let extra copies share the scope count.
 			window.cssScope ??= new MutationObserver(mutations => { // Allow 1 observer.
-				document?.body?.querySelectorAll('style:not([ready])').forEach(node => { // Faster than walking MutationObserver results when recieving subtree (DOM swap, htmx, ajax, jquery).
+				document?.body?.querySelectorAll('stylus:not([ready])').forEach(node => { // Faster than walking MutationObserver results when recieving subtree (DOM swap, htmx, ajax, jquery).
 					var scope = 'me__'+(window.cssScopeCount++) // Ready. Make unique scope, example: .me__1234
 					node.parentNode.classList.add(scope)
-					node.textContent = node.textContent
+					node.textContent = stylus_to_css(node.textContent)
 					.replace(/(?:^|\.|(\s|[^a-zA-Z0-9\-\_]))(me|this|self)(?![a-zA-Z])/g, '$1.'+scope) // Can use: me this self
 					.replace(/((@keyframes|animation:|animation-name:)[^{};]*)\.me__/g, '$1me__') // Optional. Removes need to escape names, ex: "\.me"
 					.replace(/(?:@media)\s(xs-|sm-|md-|lg-|xl-|sm|md|lg|xl|xx)/g, // Optional. Responsive design. Mobile First (above breakpoint): 🟢 None sm md lg xl xx 🏁  Desktop First (below breakpoint): 🏁 xs- sm- md- lg- xl- None 🟢 *- matches must be first!
 						(match, part1) => { return '@media '+({'sm':'(min-width: 640px)','md':'(min-width: 768px)', 'lg':'(min-width: 1024px)', 'xl':'(min-width: 1280px)', 'xx':'(min-width: 1536px)', 'xs-':'(max-width: 639px)', 'sm-':'(max-width: 767px)', 'md-':'(max-width: 1023px)', 'lg-':'(max-width: 1279px)', 'xl-':'(max-width: 1535px)'}[part1]) }
 					)
 					node.setAttribute('ready', '')
+					var newElement = document.createElement("style")
+					newElement.textContent = node.textContent
+					node.parentNode.replaceChild(newElement, node)
 				})
 			}).observe(document.documentElement, {childList: true, subtree: true})
 		</script>
+		<stylus>
+			*,*::before,*::after
+				margin: 0; box-sizing: border-box /* Reset */
+			html
+				font-size: 10px /* Root size. Usage: 1.8rem = 18px (1rem = 10px) */
+				text-size-adjust: none /* Reset auto size. */
+				-webkit-text-size-adjust: none /* Fix safari. */
+				background: #222
+				color: #ccc
+			body 
+				font-size: 2rem /* 2rem = 20px in our setup. */
+			html button 
+				font-size: 2rem
+				cursor: pointer 
+				color: #fff 
+				text-shadow: 0 2px #000000AA
+				padding: 2rem 2.4rem
+				margin: 2rem
+				background: hsl(345 100% 47%)
+				border: 0
+				border-bottom: 0.5rem solid hsl(345 100% 28%)
+				border-radius: 12px
+				transition: all 0.3s
+			html button:hover
+				background: hsl(345 100% 60%)
+				transform: translateY(-0.2rem)
+			html button:active
+				transform: translateY(0.2rem)
+		</stylus>
 	</head>
 	<body>
+		<div>💩 No style.</div>
 
-	<h1>Inline real time stylus demo</h1>
+		<div>
+			<stylus>
+				me /* Simple example. */
+					margin: 20px
+				me div 
+					font-size: 5rem
+			</stylus>
+			<div>👻</div>
+		</div>
 
-	<div>
-		<style>
-			html
-				font-family: Noto Sans, sans-serif
-			h1, h2, h3
-				font-size: 3rem
-				margin: 10px
-			me
-				border: none
-				color: black
-				font-family: Noto Sans, sans-serif
-				background: hsl(100 20% 70%)
-				border: none
-				border-radius: 12px
-				box-shadow: 2px 2px 5px #00000044
-				padding: 10px 20px
-				color: #222
-				margin: 20px
-				animation: bounce 4s ease-in-out infinite
-				& span
-					background: hsl(200 50% 70%)
-					padding: 12px
-					border-radius: 4px
-					color: #fff
-				& ::before
-					content:'🔮'
-					padding: 0 4px 0 0
+		<div>
+			<stylus>
+				/* Flat, 1 selector style. Really easy. We recommend it! */
 				me
-					li
-						list-style: disc
-						padding: 4px
-						border-radius: 12px
-						margin: 4px 20px
-			@keyframes bounce
-				0%
-					transform: translateY(0px)
-				50%
-					transform: translateY(20px)
-				100%
-					transform: translateY(0px)
-		</style>
-		Testing.. testing.. <span>Nested CSS</span>
-	</div>
-</body>
+					font-family: 'Noto Sans', sans-serif
+					background: hsl(264 62% 20%)
+					color: #fff
+				me ol 
+					padding: 5px 0
+				me ol li 
+					list-style: disc
+					padding: 4px
+					border-radius: 12px
+					margin: 4px 20px
+				/* ✨ this and self alias me */
+				this ol li[n1] 
+					background: hsl(264 50% 50%)
+				self ol li[n2] 
+					background: hsl(264 80% 50%)
+				/* Nested, 1 selector style. Possible! But visually busy. */
+				me 
+					border:none
+					border-radius: 12px
+					box-shadow: 0 2px 5px #00000044
+					padding: 10px 20px
+					margin: 20px
+					& span 
+						background: hsl(264 90% 90%)
+						color: hsl(264 30% 40%)
+						padding: 16px 20px
+						border-radius: 8px
+						box-shadow: 0 0 5px hsl(0 0% 0% / 20%)
+						&::before 
+							content:'🔮'
+							padding: 0 1ch 0 0
+				/* Animations */
+				me
+					animation: me 2s ease-in-out infinite
+				@keyframes me
+					/* ♻️ Looped animation @keyframes can be scoped! .. prefix with me- or me_ for more names! */
+					0% 
+						transform: translateY(0px)
+					50% 
+						transform: translateY(20px)
+					100%
+						transform: translateY(0px)
+				/* Plain CSS works untouched! */
+				h1, h2, h3
+					font-size: 3rem
+					margin: 20px 0
+			</stylus>
+			<h1>🛸 Scoped style using me</h1>
+			<ol>
+				<li>Use modern <span>Nested CSS</span>
+				<li n1>👽 Using this
+				<li n2>💀 Using self
+				<li>⚡ Use live editing in the browser inspector to speed up your workflow, again!
+			</ol>
+		</div>
+		<br />
+
+		<div>
+			<stylus>
+				/* Scoped CSS variables work fine! */
+				me { --color: hsl(264 80% 50%); font-family: sans-serif; margin: 20px }
+				me div { margin: 20px 0 }
+				me div ul { margin: 0; padding: 0 }
+				me div ul li { display: inline-block; width: 110px; text-align: center; background: #444; border-radius: 5px; padding: 10px 2px; margin: 10px 10px }
+			</stylus>
+			<h2>Responsive Design 🔛 Resize the window!</h2>
+			🟢 = No breakpoint. Default.
+			<div>
+				<stylus>
+					me ul
+						li[n1]
+							background: var(--color)
+					@media sm
+						me ul li[n2]
+							background: var(--color)
+					@media md 
+						me ul li[n3]
+							background: var(--color)
+					@media lg 
+						me ul li[n4]
+							background: var(--color)
+					@media xl
+						me ul li[n5]
+							background: var(--color)
+					@media xx
+						me ul li[n6]
+							background: var(--color)
+				</stylus>
+				<div>Mobile First (<strong>above</strong> breakpoint)</div>
+				<ul><li n1><strong>🟢 None</strong><li n2>sm<li n3>md<li n4>lg<li n5>xl<li n6>🏁 xx</ul>
+			</div>
+			<div>
+				<stylus>
+					/* You can also nest @media styles! */
+					me ul li
+						&[n1] {
+								background: var(--color);
+						}
+						@media xl- { &[n2] { background: var(--color); } }
+						@media lg- { &[n3] { background: var(--color); } }
+						@media md- { &[n4] { background: var(--color); } }
+						@media sm- { &[n5] { background: var(--color); } }
+						@media xs- { &[n6] { background: var(--color); } }
+				</stylus>
+				<div>Desktop First (<strong>below</strong> breakpoint)</div>
+				<ul><li n6>🏁 xs-<li n5>sm-<li n4>md-<li n3>lg-<li n2>xl-<li n1><strong>🟢 None</strong></ul>
+			</div>
+			<br />
+
+			<h2>HTMX Test</h2>
+			<script src="https://unpkg.com/htmx.org@1.9.6/dist/htmx.min.js" defer></script>
+			<div>Swapped DOM elements are styled instantly when they arrive.</div>
+			<button garlic hx-get="https://gnat.github.io/css-scope-inline/example.html" hx-select="button[garlic]" hx-swap="afterend">
+				<stylus>
+					me { margin: 4px; padding: 10px 30px; min-width: 80px; background: hsl(264 80% 47%); border-bottom: 0.5rem solid hsl(264 80% 20%); }
+					me:hover { background: hsl(264 80% 60%); }
+				</stylus>
+				🧄
+			</button>
+			<button vampire hx-get="https://gnat.github.io/css-scope-inline/example.html" hx-select="button[vampire]" hx-swap="afterend">
+				<stylus>
+					me { margin: 4px; padding: 10px 30px; min-width: 80px; background: hsl(150 80% 47%); border-bottom: 0.5rem solid hsl(150 80% 28%); }
+					me:hover { background: hsl(150 80% 60%); }
+				</stylus>
+				🧛
+			</button>
+		</div>
+
+		<button onClick="window.open('https://github.com/gnat/css-scope-inline/blob/main/example.html');" style="font-weight: bold; font-family: sans-serif;">🐱 View code for this page.</button>
+	</body>
 </html>
