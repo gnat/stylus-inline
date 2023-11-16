@@ -1,5 +1,8 @@
 # 🌘 Stylus CSS Inline
 
+For fun companion prototype for [css-scope-inline](https://github.com/gnat/css-scope-inline). Unsure if development will continue, but if anyone wants to steal ideas from this.. here you go. Made to work with [stylus-esque css](https://github.com/stylus/stylus) originally concieved by [
+TJ Holowaychuk](https://github.com/tj)
+
 ## 🐍 Python Version (stylus.py)
 * Most reliable version since it generates `main.css` locally for you to load normally in the browser.
 
