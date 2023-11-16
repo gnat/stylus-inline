@@ -1,4 +1,4 @@
-# 🌘 Stylus CSS Inline
+# 🪄 Stylus CSS Inline
 
 For fun prototype based on [css-scope-inline](https://github.com/gnat/css-scope-inline). Unsure if development will continue, but if anyone wants to borrow ideas or code.. here you go. Made to work like [Stylus](https://github.com/stylus/stylus) CSS originally concieved by [
 TJ Holowaychuk](https://github.com/tj) of Express.js fame.
