@@ -1,7 +1,11 @@
 # 🌘 Stylus CSS Inline
 
-For fun companion prototype for [css-scope-inline](https://github.com/gnat/css-scope-inline). Unsure if development will continue, but if anyone wants to steal ideas from this.. here you go. Made to work with [stylus-esque css](https://github.com/stylus/stylus) originally concieved by [
+For fun companion prototype for [css-scope-inline](https://github.com/gnat/css-scope-inline). Unsure if development will continue, but if anyone wants to borrow ideas or code.. here you go. Made to work like [stylus CSS](https://github.com/stylus/stylus) originally concieved by [
 TJ Holowaychuk](https://github.com/tj)
+
+With new [CSS Nesting](https://developer.chrome.com/articles/css-nesting/), `hsl()`, CSS variables: classic Stylus is beginning to diverge too greatly with vanilla CSS. It's time to leave! This project may be an option for you.
+
+2023 it may be best to seriously consider [vanilla CSS](https://twitter.com/dhh/status/1719041666412347651).
 
 ## 🐍 Python Version (stylus.py)
 * Most reliable version since it generates `main.css` locally for you to load normally in the browser.
@@ -15,8 +19,5 @@ TJ Holowaychuk](https://github.com/tj)
 
 
 ## 👀 Before you adopt.
-* I realise Stylus is amazing but.. you lose the ability to inline a ton of styles at once in a single line. Sure, you save `{` and `}` but you gain verbosity elsewhere (unless of course you always add a new line for each style! May not be worthwhile to use this code depending on what patterns you currently enjoy using.
-* With the new Nested syntax, hsl(), variables becoming common: classic Stylus is beginning to diverge greatly with vanilla CSS. It's time to leave. This may be an option, but a better option might be just [vanilla css](https://twitter.com/dhh/status/1719041666412347651)
 
-![image](https://github.com/gnat/stylus-inline/assets/24665/3a306fe7-26da-44f9-bc14-5e1a9559cf7e)
-
+I realise Stylus is amazing but.. you lose the ability to inline a ton of styles at once in a single line. Sure, you save `{` and `}` but you gain verbosity elsewhere (unless of course you always add a new line for each style! May not be worthwhile to use this code depending on what patterns you currently enjoy using.
