@@ -5,7 +5,7 @@ TJ Holowaychuk](https://github.com/tj) of Express.js fame.
 
 With new [CSS Nesting](https://developer.chrome.com/articles/css-nesting/), `hsl()` syntax differences, true CSS variables: classic Stylus is beginning to diverge too greatly with vanilla CSS. It's time to leave! This project may be an option for you.
 
-2023 it may be best to seriously consider [vanilla CSS](https://twitter.com/dhh/status/1719041666412347651).
+2023 it may also be best to seriously consider [vanilla CSS](https://twitter.com/dhh/status/1719041666412347651).
 
 ## 🐍 Python Version (stylus.py)
 * Most reliable version since it generates `main.css` locally for you to load normally in the browser.
