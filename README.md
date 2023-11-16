@@ -9,6 +9,7 @@ With new [CSS Nesting](https://developer.chrome.com/articles/css-nesting/), `hsl
 
 ## 🐍 Python Version (stylus.py)
 * Most reliable version since it generates `main.css` locally for you to load normally in the browser.
+* This version is a bit more complete and robust than the Javascript one.
 
 ## ☕ Javascript Version (stylus.html)
 * Works inside inline scoped `<stylus>`!
