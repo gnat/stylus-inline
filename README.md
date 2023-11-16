@@ -11,7 +11,7 @@ With new [CSS Nesting](https://developer.chrome.com/articles/css-nesting/), `hsl
 * Most reliable version since it generates `main.css` locally for you to load normally in the browser.
 
 ## ☕ Javascript Version (stylus.html)
-* Works for inline scoped `<stylus>`!
+* Works inside inline scoped `<stylus>`!
 * Syntax highlighting in Sublime works!
 * 🟠 External stylus in real time: Browser removes invalid CSS from `<link>` and `@import()` making those paths invalid for processing.
   * Requires loading via custom JS function to work. Might or might not be worth it?
