@@ -1,6 +1,6 @@
 # 🌘 Stylus CSS Inline
 
-For fun companion prototype for [css-scope-inline](https://github.com/gnat/css-scope-inline). Unsure if development will continue, but if anyone wants to borrow ideas or code.. here you go. Made to work like [stylus CSS](https://github.com/stylus/stylus) originally concieved by [
+Fun prototype based on [css-scope-inline](https://github.com/gnat/css-scope-inline). Unsure if development will continue, but if anyone wants to borrow ideas or code.. here you go. Made to work like [stylus CSS](https://github.com/stylus/stylus) originally concieved by [
 TJ Holowaychuk](https://github.com/tj)
 
 With new [CSS Nesting](https://developer.chrome.com/articles/css-nesting/), `hsl()`, CSS variables: classic Stylus is beginning to diverge too greatly with vanilla CSS. It's time to leave! This project may be an option for you.
