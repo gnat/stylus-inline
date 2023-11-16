@@ -20,4 +20,4 @@ With new [CSS Nesting](https://developer.chrome.com/articles/css-nesting/), `hsl
 
 ## 👀 Before you adopt.
 
-I realise Stylus is amazing but.. you lose the ability to inline a ton of styles at once in a single line. Sure, you save `{` and `}` but you gain verbosity elsewhere (unless of course you always add a new line for each style! May not be worthwhile to use this code depending on what patterns you currently enjoy using.
+I realise Stylus is amazing but.. you lose the ability to inline a ton of styles at once in a single line. Sure, you save `{` and `}` but you gain verbosity elsewhere (unless of course you **always** add a new line for each style anyway!) May not be worthwhile to use this code depending on what patterns you currently enjoy using.
