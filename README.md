@@ -1,11 +1,9 @@
 # 🪄 Stylus CSS Inline
 
-For fun prototype based on [css-scope-inline](https://github.com/gnat/css-scope-inline). Unsure if development will continue, but if anyone wants to borrow ideas or code.. here you go. Made to work like [Stylus](https://github.com/stylus/stylus) CSS originally concieved by [
-TJ Holowaychuk](https://github.com/tj) of Express.js fame.
+Experiment based on [css-scope-inline](https://github.com/gnat/css-scope-inline). Made to work like [Stylus](https://github.com/stylus/stylus) CSS originally concieved by [
+TJ Holowaychuk](https://github.com/tj) of Express.js
 
-With new [CSS Nesting](https://developer.chrome.com/articles/css-nesting/), `hsl()` syntax differences, true CSS variables: classic Stylus is beginning to diverge too greatly with vanilla CSS. It's time to leave! This project may be an option for you.
-
-2023 it may also be best to seriously consider [vanilla CSS](https://twitter.com/dhh/status/1719041666412347651).
+With new [CSS Nesting](https://developer.chrome.com/articles/css-nesting/), `hsl()` syntax differences and true CSS variables: **classic Stylus is beginning to diverge too greatly with vanilla CSS. It's time to leave!** -- This project may be an option for you.
 
 ## 🐍 Python Version (stylus.py)
 * Most reliable version since it generates `main.css` for you to load normally.
@@ -23,7 +21,7 @@ With new [CSS Nesting](https://developer.chrome.com/articles/css-nesting/), `hsl
 
 ## 👀 Before you adopt.
 
-I realise Stylus is amazing but.. you lose the ability to inline a ton of styles at once in a single line. Sure, you save `{` and `}` but you gain verbosity elsewhere (unless of course you **always** add a new line for each style anyway!) May not be worthwhile to use this code depending on what patterns you currently enjoy using.
+I realise Stylus is amazing but.. you lose the ability to inline styles in a single line (tailwind-like). Sure, you save `{` and `}` but you gain verbosity elsewhere (unless of course you **always** add a new line for each style anyway!) May not be worthwhile to use this code depending on what patterns you currently enjoy using.
 
 **A good highlighter can help a lot.**
 
