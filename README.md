@@ -26,3 +26,6 @@ I realise Stylus is amazing but.. you lose the ability to inline styles in a sin
 **A good highlighter can help a lot.**
 
 ![image](https://github.com/user-attachments/assets/0fb41d75-6df2-46e5-9496-251eb84fd0b7)
+
+
+![image](https://github.com/user-attachments/assets/f659fc31-e473-449a-8377-f3539a07fb0c)
