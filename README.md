@@ -19,8 +19,9 @@ With new [CSS Nesting](https://developer.chrome.com/articles/css-nesting/), `hsl
 * 🟢 Working method ...
 
 **main.styl**
-```js
-document.currentScript.outerHTML = `<styl>
+```html
+document.currentScript.outerHTML = `
+<styl>
 html
 	background: green
 </styl>`
@@ -32,11 +33,11 @@ html
 **BONUS: Ability to include `.styl` within `.styl`**
 * 🟠 Warning: May cause undesirable loading times as parent `.styl` must load *first*!
   * You're probably best off avoiding `.styl` within other `.styl` for loading performance.
-```js
+```html
 document.currentScript.outerHTML = `
 <styl>
-	html
-		background: green
+html
+	background: green
 </styl>
 <styl src="component.styl"></styl>
 `; document.querySelectorAll('styl[src]').forEach(s => { let ns = document.createElement('script'); ns.src = s.getAttribute('src'); s.replaceWith(ns) })
