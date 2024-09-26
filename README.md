@@ -29,9 +29,9 @@ html
 ```html
 <script src="main.styl"></script>
 ```
-**BONUS: Ability to include `.styl` within `.styl` (Example: `<styl src="component.styl"></styl>`)**
-* 🟠 Warning: May cause undesirable loading times as parent `.styl` must load first!
-  * Best practice: Avoid including `.styl` within other `.styl`
+**BONUS: Ability to include `.styl` within `.styl`**
+* 🟠 Warning: May cause undesirable loading times as parent `.styl` must load *first*!
+  * You're probably best off avoiding `.styl` within other `.styl` for loading performance.
 ```js
 document.currentScript.outerHTML = `
 <styl>
