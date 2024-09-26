@@ -29,7 +29,7 @@ html
 ```html
 <script src="main.styl"></script>
 ```
-**Ability to include `.styl` within `.styl` (Example: `<styl src="component.styl"></styl>`)**
+**BONUS: Ability to include `.styl` within `.styl` (Example: `<styl src="component.styl"></styl>`)**
 * 🟠 Warning: May cause undesirable loading times as parent `.styl` must load first!
   * Best practice: Avoid including `.styl` within other `.styl`
 ```js
