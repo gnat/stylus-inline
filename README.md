@@ -13,10 +13,10 @@ With new [CSS Nesting](https://developer.chrome.com/articles/css-nesting/), `hsl
 * Runs in the browser automatically!
 * Works inside inline scoped `<styl>`!
 * Syntax highlighting in Sublime works!
-* 🟠 External styl implementation pitfalls:
-  * Browser removes invalid CSS from `<link>` and `@import()` making those paths invalid for processing.
-  * Requires Javascript magic.
-* 🟢 Working method ...
+* Including external `.styl`
+  * Implementation pitfalls:
+    * Browser removes invalid CSS from `<link>` and `@import()` making those paths invalid for processing.
+    * We use the workaround below...
 
 **main.styl**
 ```html
