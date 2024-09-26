@@ -3,16 +3,15 @@
 	<head>
 		<title>🌘 CSS Scope Inline Test Page</title>
 		<script>
-			function stylus_to_css(string){
-				var cursor=0
+			function stylToStyle(string){
+				let cursor=0
 
 				// Remove comments, extra lines.
 				string = string.replace(/(\/\*[\s\S]*?\*\/|\/\/[^\n]*)/g, '').replace(/^\s*$/gm, '').replace(/ +$/gm, '')
 				console.log(string)
 
-
 				// Remove excess indentation (dedent).
-				var indent=''
+				let indent=''
 				while (cursor < string.length) {
 					if (string[cursor] == "\n") { // Line.
 						cursor += 1 // Next.
@@ -30,8 +29,8 @@
 				string = " "+string
 
 				// Add curly braces.
-				var level_from=0
-				var level_to=0
+				let level_from=0
+				let level_to=0
 
 				while (cursor < string.length) {
 					if (string[cursor] == "\n") { // Line.
@@ -48,7 +47,7 @@
 						level_from += 1
 
 						// Cursor #2 finds last real character for the insert.
-						var cursor_2 = cursor-1
+						let cursor_2 = cursor-1
 						while (cursor_2 > 0 && ["\n", "\t", " "].includes(string[cursor_2])) {
 							cursor_2 -= 1
 						}
@@ -63,7 +62,7 @@
 						level_from -= 1
 
 						// Cursor #2 finds last real character for the insert.
-						var cursor_2 = cursor-1
+						let cursor_2 = cursor-1
 						while (cursor_2 > 0 && ["\n", "\t", " "].includes(string[cursor_2])) {
 							cursor_2 -= 1
 						}
@@ -92,7 +91,7 @@
 				while (cursor < string.length) {
 					if (string[cursor] === "\n") { // Line.
 						if (cursor > 2) { // Should we add a semicolon?
-							var c = string[cursor-1]
+							let c = string[cursor-1]
 							if (c !== '{' && c !== '}' &&
 								(c === "\'" || c === '"' || c === ')' || c === '%' || c === '-' || c === '_' || alphanum(c))) {
 								string = string.slice(0, cursor) +';'+ string.slice(cursor)
@@ -101,8 +100,6 @@
 					}
 					cursor += 1 // Next.
 				}
-
-
 				return string
 			}
 		</script>
@@ -110,23 +107,26 @@
 			// 🌘 CSS Scope Inline (https://github.com/gnat/css-scope-inline)
 			window.cssScopeCount ??= 1 // Let extra copies share the scope count.
 			window.cssScope ??= new MutationObserver(mutations => { // Allow 1 observer.
-				document?.body?.querySelectorAll('stylus:not([ready])').forEach(node => { // Faster than walking MutationObserver results when recieving subtree (DOM swap, htmx, ajax, jquery).
-					var scope = 'me__'+(window.cssScopeCount++) // Ready. Make unique scope, example: .me__1234
+				// Styl Support
+				document?.body?.querySelectorAll('styl').forEach(node => {
+					let e = document.createElement('style')
+					e.textContent = stylToStyle(node.textContent)
+					node.parentNode.replaceChild(e, node)
+				})
+				document?.body?.querySelectorAll('style:not([ready])').forEach(node => { // Faster than walking MutationObserver results when recieving subtree (DOM swap, htmx, ajax, jquery).
+					let scope = 'me__'+(window.cssScopeCount++) // Ready. Make unique scope, example: .me__1234
 					node.parentNode.classList.add(scope)
-					node.textContent = stylus_to_css(node.textContent)
+					node.textContent = node.textContent
 					.replace(/(?:^|\.|(\s|[^a-zA-Z0-9\-\_]))(me|this|self)(?![a-zA-Z])/g, '$1.'+scope) // Can use: me this self
 					.replace(/((@keyframes|animation:|animation-name:)[^{};]*)\.me__/g, '$1me__') // Optional. Removes need to escape names, ex: "\.me"
 					.replace(/(?:@media)\s(xs-|sm-|md-|lg-|xl-|sm|md|lg|xl|xx)/g, // Optional. Responsive design. Mobile First (above breakpoint): 🟢 None sm md lg xl xx 🏁  Desktop First (below breakpoint): 🏁 xs- sm- md- lg- xl- None 🟢 *- matches must be first!
 						(match, part1) => { return '@media '+({'sm':'(min-width: 640px)','md':'(min-width: 768px)', 'lg':'(min-width: 1024px)', 'xl':'(min-width: 1280px)', 'xx':'(min-width: 1536px)', 'xs-':'(max-width: 639px)', 'sm-':'(max-width: 767px)', 'md-':'(max-width: 1023px)', 'lg-':'(max-width: 1279px)', 'xl-':'(max-width: 1535px)'}[part1]) }
 					)
 					node.setAttribute('ready', '')
-					var newElement = document.createElement("style")
-					newElement.textContent = node.textContent
-					node.parentNode.replaceChild(newElement, node)
 				})
 			}).observe(document.documentElement, {childList: true, subtree: true})
 		</script>
-		<stylus>
+		<styl>
 			*,*::before,*::after
 				margin: 0; box-sizing: border-box /* Reset */
 			html
@@ -154,23 +154,23 @@
 				transform: translateY(-0.2rem)
 			html button:active
 				transform: translateY(0.2rem)
-		</stylus>
+		</styl>
 	</head>
 	<body>
 		<div>💩 No style.</div>
 
 		<div>
-			<stylus>
+			<styl>
 				me /* Simple example. */
 					margin: 20px
 				me div 
 					font-size: 5rem
-			</stylus>
+			</styl>
 			<div>👻</div>
 		</div>
 
 		<div>
-			<stylus>
+			<styl>
 				/* Flat, 1 selector style. Really easy. We recommend it! */
 				me
 					font-family: 'Noto Sans', sans-serif
@@ -219,7 +219,7 @@
 				h1, h2, h3
 					font-size: 3rem
 					margin: 20px 0
-			</stylus>
+			</styl>
 			<h1>🛸 Scoped style using me</h1>
 			<ol>
 				<li>Use modern <span>Nested CSS</span>
@@ -231,17 +231,17 @@
 		<br />
 
 		<div>
-			<stylus>
+			<styl>
 				/* Scoped CSS variables work fine! */
 				me { --color: hsl(264 80% 50%); font-family: sans-serif; margin: 20px }
 				me div { margin: 20px 0 }
 				me div ul { margin: 0; padding: 0 }
 				me div ul li { display: inline-block; width: 110px; text-align: center; background: #444; border-radius: 5px; padding: 10px 2px; margin: 10px 10px }
-			</stylus>
+			</styl>
 			<h2>Responsive Design 🔛 Resize the window!</h2>
 			🟢 = No breakpoint. Default.
 			<div>
-				<stylus>
+				<styl>
 					me ul
 						li[n1]
 							background: var(--color)
@@ -260,12 +260,12 @@
 					@media xx
 						me ul li[n6]
 							background: var(--color)
-				</stylus>
+				</styl>
 				<div>Mobile First (<strong>above</strong> breakpoint)</div>
 				<ul><li n1><strong>🟢 None</strong><li n2>sm<li n3>md<li n4>lg<li n5>xl<li n6>🏁 xx</ul>
 			</div>
 			<div>
-				<stylus>
+				<styl>
 					/* You can also nest @media styles! */
 					me ul li
 						&[n1] {
@@ -276,7 +276,7 @@
 						@media md- { &[n4] { background: var(--color); } }
 						@media sm- { &[n5] { background: var(--color); } }
 						@media xs- { &[n6] { background: var(--color); } }
-				</stylus>
+				</styl>
 				<div>Desktop First (<strong>below</strong> breakpoint)</div>
 				<ul><li n6>🏁 xs-<li n5>sm-<li n4>md-<li n3>lg-<li n2>xl-<li n1><strong>🟢 None</strong></ul>
 			</div>
@@ -286,17 +286,17 @@
 			<script src="https://unpkg.com/htmx.org@1.9.6/dist/htmx.min.js" defer></script>
 			<div>Swapped DOM elements are styled instantly when they arrive.</div>
 			<button garlic hx-get="https://gnat.github.io/css-scope-inline/example.html" hx-select="button[garlic]" hx-swap="afterend">
-				<stylus>
+				<styl>
 					me { margin: 4px; padding: 10px 30px; min-width: 80px; background: hsl(264 80% 47%); border-bottom: 0.5rem solid hsl(264 80% 20%); }
 					me:hover { background: hsl(264 80% 60%); }
-				</stylus>
+				</styl>
 				🧄
 			</button>
 			<button vampire hx-get="https://gnat.github.io/css-scope-inline/example.html" hx-select="button[vampire]" hx-swap="afterend">
-				<stylus>
+				<styl>
 					me { margin: 4px; padding: 10px 30px; min-width: 80px; background: hsl(150 80% 47%); border-bottom: 0.5rem solid hsl(150 80% 28%); }
 					me:hover { background: hsl(150 80% 60%); }
-				</stylus>
+				</styl>
 				🧛
 			</button>
 		</div>
