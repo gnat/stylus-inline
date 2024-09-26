@@ -1,22 +1,36 @@
-# 🪄 Stylus CSS Inline
+# 🪄 Stylus CSS Inline (SugarSS Inline)
 
 Experiment based on [css-scope-inline](https://github.com/gnat/css-scope-inline). Made to work like [Stylus](https://github.com/stylus/stylus) CSS originally concieved by [
-TJ Holowaychuk](https://github.com/tj) of Express.js
+TJ Holowaychuk](https://github.com/tj) of Express.js (or like [sugarss](https://github.com/postcss/sugarss))
 
 With new [CSS Nesting](https://developer.chrome.com/articles/css-nesting/), `hsl()` syntax differences and true CSS variables: **classic Stylus is beginning to diverge too greatly with vanilla CSS. It's time to leave!** -- This project may be an option for you.
 
 ## 🐍 Python Version (stylus.py)
-* Most reliable version since it generates `main.css` for you to load normally.
+* Most reliable version since it generates `main.styl` for you to load normally.
 * This version is a bit more complete and robust than the Javascript one.
 
 ## ☕ Javascript Version (stylus.html)
 * Runs in the browser automatically!
-* Works inside inline scoped `<stylus>`!
+* Works inside inline scoped `<styl>`!
 * Syntax highlighting in Sublime works!
-* 🟠 Idea of external stylus in real time has issues.
+* 🟠 External styl implementation pitfalls:
   * Browser removes invalid CSS from `<link>` and `@import()` making those paths invalid for processing.
-    * Requires loading via custom JS function to work. Might or might not be worth it?
-      * Could load via `stylus('/css/main.css')` and inline `<script>` at top? Meh.
+  * Requires Javascript magic.
+* 🟢 Working method ...
+
+**main.styl**
+```js
+document.currentScript.outerHTML = `
+<styl>
+  html
+    background: green
+</styl>
+`; document.querySelectorAll('styl[src]').forEach(s => { let ns = document.createElement('script'); ns.src = s.getAttribute('src'); s.replaceWith(ns) }) // If you need <styl src="..."></styl>
+```
+**index.html**
+```html
+<script src="main.styl"></script>
+```
 
 
 ## 👀 Before you adopt.
