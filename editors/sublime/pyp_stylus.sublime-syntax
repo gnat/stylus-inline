@@ -13,11 +13,11 @@ contexts:
     - match: \<\?
       embed: scope:source.python
       escape: \?\>
-    - match: \<stylus\>
+    - match: \<styl\>
       captures:
         0: entity.name.tag.block.any.html
       embed: scope:source.stylus
-      escape: \<\/stylus\>
+      escape: \<\/styl\>
       escape_captures:
         0: entity.name.tag.block.any.html
 
