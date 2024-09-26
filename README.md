@@ -20,16 +20,26 @@ With new [CSS Nesting](https://developer.chrome.com/articles/css-nesting/), `hsl
 
 **main.styl**
 ```js
-document.currentScript.outerHTML = `
-<styl>
-  html
-    background: green
-</styl>
-`; document.querySelectorAll('styl[src]').forEach(s => { let ns = document.createElement('script'); ns.src = s.getAttribute('src'); s.replaceWith(ns) }) // If you need <styl src="..."></styl>
+document.currentScript.outerHTML = `<styl>
+html
+	background: green
+</styl>`
 ```
 **index.html**
 ```html
 <script src="main.styl"></script>
+```
+**Ability to include `.styl` within `.styl` (Example: `<styl src="component.styl"></styl>`)**
+* 🟠 Warning: May cause undesirable loading times as parent `.styl` must load first!
+  * Best practice: Avoid including `.styl` within other `.styl`
+```js
+document.currentScript.outerHTML = `
+<styl>
+	html
+		background: green
+</styl>
+<styl src="component.styl"></styl>
+`; document.querySelectorAll('styl[src]').forEach(s => { let ns = document.createElement('script'); ns.src = s.getAttribute('src'); s.replaceWith(ns) })
 ```
 
 
